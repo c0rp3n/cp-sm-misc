@@ -18,7 +18,7 @@ public Plugin myinfo =
 
 Cookie g_ckFireMode = null;
 
-int m_iAmmo, m_hActiveWeapon, m_iClip1, /*m_iPrimaryAmmoType*/, m_iPrimaryReserveAmmoCount;
+int m_iAmmo, m_hActiveWeapon, m_iClip1, /*m_iPrimaryAmmoType,*/ m_iPrimaryReserveAmmoCount;
 
 bool g_bEnabled[MAXPLAYERS + 1] = { false, ... };
 bool g_bHasShot[MAXPLAYERS + 1] = { false, ... };
@@ -42,6 +42,16 @@ public void OnPluginStart()
     //RegAdminCmd("sm_checkammo", Command_CheckAmmo, ADMFLAG_CHEATS, "checks the current weapons ammo.");
 
     HookEvent("weapon_fire", Event_PlayerWeaponFire, EventHookMode_Post);
+
+    for (int i = 1; i < MaxClients; ++i)
+    {
+        if (IsClientInGame(i) &&
+            !IsFakeClient(i) &&
+            AreClientCookiesCached(i))
+        {
+            OnClientCookiesCached(i);
+        }
+    }
 }
 
 public void OnClientPutInServer(int client)
