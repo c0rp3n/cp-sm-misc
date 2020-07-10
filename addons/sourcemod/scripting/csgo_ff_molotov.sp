@@ -42,7 +42,7 @@ public void OnClientPutInServer(int client)
 {
     if (g_cEnabled.BoolValue)
     {
-        SDKHook(client, SDKHook_OnTakeDamage, OnTakeDamage);
+        SDKHook(client, SDKHook_OnTakeDamage, Hook_OnTakeAliveDamage);
     }
 }
 
@@ -52,7 +52,7 @@ public void OnConVarChanged(ConVar convar, const char[] oldValue, const char[] n
     {
         LoopValidClients(i)
         {
-            SDKHook(i, SDKHook_OnTakeDamage, OnTakeDamage);
+            SDKHook(i, SDKHook_OnTakeDamageAlive, Hook_OnTakeAliveDamage);
         }
         CPrintToChatAll("[FFexM] Friendly-Fire is now enabled.");
     }
@@ -60,31 +60,31 @@ public void OnConVarChanged(ConVar convar, const char[] oldValue, const char[] n
     {
         LoopValidClients(i)
         {
-            SDKUnhook(i, SDKHook_OnTakeDamage, OnTakeDamage);
+            SDKUnhook(i, SDKHook_OnTakeDamageAlive, Hook_OnTakeAliveDamage);
         }
         CPrintToChatAll("[FFexM] Friendly-Fire is now disabled.");
     }
 }
 
-public Action OnTakeDamage(int victim, int &attacker, int &inflictor, float &damage, int &damagetype, int &weapon, float damageForce[3], float damagePosition[3])
+public Action Hook_OnTakeAliveDamage(int victim, int &attacker, int &inflictor, float &damage, int &damagetype, int &weapon, float damageForce[3], float damagePosition[3])
 {
-    if(!IsClientValid(attacker) || !IsClientValid(victim))
-        return Plugin_Handled;
+    if(!IsClientValid(attacker))
+    {
+        return Plugin_Continue;
+    }
 
     char WeaponCallBack[32];
     GetEdictClassname(inflictor, WeaponCallBack, sizeof(WeaponCallBack));
 
-    if ((!IsValidEntity(victim)) || (!IsValidEntity(attacker)))
-        return Plugin_Continue;
-
     if ((strlen(WeaponCallBack) <= 0) || (attacker == victim) || (GetClientTeam(victim) != GetClientTeam(attacker)) )
+    {
         return Plugin_Continue;
+    }
 
     if (StrEqual(WeaponCallBack, "inferno", false))
-        return Plugin_Continue;
+    {
+        return Plugin_Stop;
+    }
 
-    if (damagetype & DMG_FALL)
-        return Plugin_Continue;
-
-    return Plugin_Handled;
+    return Plugin_Continue;
 }
