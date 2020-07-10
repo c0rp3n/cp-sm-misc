@@ -39,7 +39,7 @@ public void OnPluginStart()
     g_ckFireMode = new Cookie("cp_single_shot_enabled", "Whether single shot is enabled.", CookieAccess_Private);
 
     RegConsoleCmd("sm_singleshot", Command_SingleShot, "");
-    RegAdminCmd("sm_checkammo", Command_CheckAmmo, ADMFLAG_CHEATS, "checks the current weapons ammo.");
+    //RegAdminCmd("sm_checkammo", Command_CheckAmmo, ADMFLAG_CHEATS, "checks the current weapons ammo.");
 
     HookEvent("weapon_fire", Event_PlayerWeaponFire, EventHookMode_Post);
 }
@@ -102,6 +102,7 @@ public Action Command_SingleShot(int client, int argc)
     return Plugin_Handled;
 }
 
+/*
 public Action Command_CheckAmmo(int client, int argc)
 {
     int weapon = GetClientActiveWeapon(client);
@@ -113,6 +114,7 @@ public Action Command_CheckAmmo(int client, int argc)
 
     return Plugin_Handled;
 }
+*/
 
 public Action Hook_WeaponSwitch(int client, int weapon)
 {
