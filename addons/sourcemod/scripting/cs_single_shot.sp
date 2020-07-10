@@ -180,7 +180,7 @@ public void Frame_PostPlayerWeaponFire(int userid)
         if (IsClientWeaponValid(client, weapon))
         {
             StoreClientAmmo(client, weapon);
-            ClearClientAmmo(client, weapon);
+            ClearWeaponAmmo(weapon);
         }
     }
 }
@@ -246,7 +246,7 @@ void StoreClientAmmo(int client, int weapon)
     //PrintToConsole(client, "[SS] StoreClientAmmo - weapon: %d, clip: %d, reserve: %d", weapon, g_iClip[client], g_iReserve[client]);
 }
 
-void ClearClientAmmo(int client, int weapon)
+void ClearWeaponAmmo(int weapon)
 {
     SetWeaponClip(weapon, 0);
     SetClientReserve(weapon, 0);
