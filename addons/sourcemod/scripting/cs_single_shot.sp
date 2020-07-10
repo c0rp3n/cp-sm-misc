@@ -243,7 +243,7 @@ void StoreClientAmmo(int client, int weapon)
     g_iClip[client] = GetWeaponClip(weapon);
     g_iReserve[client] = GetClientReserve(weapon);
 
-    PrintToConsole(client, "[SS] StoreClientAmmo - weapon: %d, clip: %d, reserve: %d", weapon, g_iClip[client], g_iReserve[client]);
+    //PrintToConsole(client, "[SS] StoreClientAmmo - weapon: %d, clip: %d, reserve: %d", weapon, g_iClip[client], g_iReserve[client]);
 }
 
 void ClearClientAmmo(int client, int weapon)
@@ -251,7 +251,7 @@ void ClearClientAmmo(int client, int weapon)
     SetWeaponClip(weapon, 0);
     SetClientReserve(weapon, 0);
 
-    PrintToConsole(client, "[SS] ClearClientAmmo - weapon: %d, clip: %d, reserve: %d", weapon, g_iClip[client], g_iReserve[client]);
+    //PrintToConsole(client, "[SS] ClearWeaponAmmo - weapon: %d, clip: %d, reserve: %d", weapon, g_iClip[client], g_iReserve[client]);
 }
 
 void RestoreClientAmmo(int client, int weapon)
@@ -259,7 +259,7 @@ void RestoreClientAmmo(int client, int weapon)
     SetWeaponClip(weapon, g_iClip[client]);
     SetClientReserve(weapon, g_iReserve[client]);
 
-    PrintToConsole(client, "[SS] RestoreClientAmmo - weapon: %d, clip: %d, reserve: %d", weapon, g_iClip[client], g_iReserve[client]);
+    //PrintToConsole(client, "[SS] RestoreClientAmmo - weapon: %d, clip: %d, reserve: %d", weapon, g_iClip[client], g_iReserve[client]);
 }
 
 /*
