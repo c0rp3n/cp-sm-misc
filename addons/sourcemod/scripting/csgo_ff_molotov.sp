@@ -1,9 +1,11 @@
+#pragma semicolon 1
+#pragma newdecls required
+
 #include <sourcemod>
 #include <sdktools>
 #include <sdkhooks>
 
 #include <generics>
-#include <colorlib>
 
 ConVar g_cEnabled = null;
 
@@ -54,7 +56,7 @@ public void OnConVarChanged(ConVar convar, const char[] oldValue, const char[] n
         {
             SDKHook(i, SDKHook_OnTakeDamageAlive, Hook_OnTakeAliveDamage);
         }
-        CPrintToChatAll("[FFexM] Friendly-Fire is now enabled.");
+        PrintToChatAll("[FFexM] Friendly-Fire is now enabled.");
     }
     else
     {
@@ -62,7 +64,7 @@ public void OnConVarChanged(ConVar convar, const char[] oldValue, const char[] n
         {
             SDKUnhook(i, SDKHook_OnTakeDamageAlive, Hook_OnTakeAliveDamage);
         }
-        CPrintToChatAll("[FFexM] Friendly-Fire is now disabled.");
+        PrintToChatAll("[FFexM] Friendly-Fire is now disabled.");
     }
 }
 
