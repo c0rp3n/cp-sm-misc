@@ -63,10 +63,10 @@ stock bool IsClientAlive(int client) // ingame and not bot and alive
     return true;
 }
 
-#define LoopValidClients(%1) 	for(int %1 = 1; %1 <= MaxClients; ++%1) if(IsClientValid(%1))
-#define LoopAliveClients(%1) 		for(int %1 = 1; %1 <= MaxClients; ++%1) if(IsClientAlive(%1))
-#define LoopDeadClients(%1) 		for(int %1 = 1; %1 <= MaxClients; ++%1) if(IsClientValid(%1) && !IsPlayerAlive(%1))
-#define LoopClients(%1) 			for(int %1 = 1; %1 <= MaxClients; ++%1)
+#define LoopValidClients(%1) for(int %1 = 1; %1 <= MaxClients; ++%1) if(IsClientValid(%1))
+#define LoopAliveClients(%1) for(int %1 = 1; %1 <= MaxClients; ++%1) if(IsClientAlive(%1))
+#define LoopDeadClients(%1)  for(int %1 = 1; %1 <= MaxClients; ++%1) if(IsClientValid(%1) && !IsPlayerAlive(%1))
+#define LoopClients(%1)      for(int %1 = 1; %1 <= MaxClients; ++%1)
 
 stock void CallTimer(Handle& timer)
 {
