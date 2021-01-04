@@ -5,8 +5,6 @@
 #include <sdktools>
 #include <sdkhooks>
 
-#include <generics>
-
 ConVar g_cEnabled = null;
 
 public Plugin myinfo =
@@ -33,9 +31,12 @@ public void OnConfigsExecuted()
     // Late load clients
     if (g_cEnabled.BoolValue)
     {
-        LoopValidClients(i)
+        for (int i = 1; i < MaxClients; ++i)
         {
-            OnClientPutInServer(i);
+            if (IsClientConnected(i) && IsClientInGame(i))
+            {
+                OnClientPutInServer(i);
+            }
         }
     }
 }
@@ -52,17 +53,23 @@ public void OnConVarChanged(ConVar convar, const char[] oldValue, const char[] n
 {
     if (convar.BoolValue)
     {
-        LoopValidClients(i)
+        for (int i = 1; i < MaxClients; ++i)
         {
-            SDKHook(i, SDKHook_OnTakeDamageAlive, Hook_OnTakeAliveDamage);
+            if (IsClientConnected(i) && IsClientInGame(i))
+            {
+                SDKHook(i, SDKHook_OnTakeDamageAlive, Hook_OnTakeAliveDamage);
+            }
         }
         PrintToChatAll("[FFexM] Friendly-Fire is now enabled.");
     }
     else
     {
-        LoopValidClients(i)
+        for (int i = 1; i < MaxClients; ++i)
         {
-            SDKUnhook(i, SDKHook_OnTakeDamageAlive, Hook_OnTakeAliveDamage);
+            if (IsClientConnected(i) && IsClientInGame(i))
+            {
+                SDKUnhook(i, SDKHook_OnTakeDamageAlive, Hook_OnTakeAliveDamage);
+            }
         }
         PrintToChatAll("[FFexM] Friendly-Fire is now disabled.");
     }
@@ -70,7 +77,7 @@ public void OnConVarChanged(ConVar convar, const char[] oldValue, const char[] n
 
 public Action Hook_OnTakeAliveDamage(int victim, int &attacker, int &inflictor, float &damage, int &damagetype, int &weapon, float damageForce[3], float damagePosition[3])
 {
-    if(!IsClientValid(attacker))
+    if(!attacker && !IsClientConnected(attacker) && !IsClientInGame(attacker))
     {
         return Plugin_Continue;
     }
